@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from "react";
 
 export default function AppFunctional(props) {
   return (
@@ -33,5 +33,5 @@ export default function AppFunctional(props) {
         <input id="submit" type="submit"></input>
       </form>
     </div>
-  )
+  );
 }
