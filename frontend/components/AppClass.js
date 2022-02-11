@@ -11,7 +11,7 @@ export default class AppClass extends React.Component {
     steps: 0,
     x: 2,
     y: 2,
-    email: "lady@gaga.com",
+    email: "",
     message: "",
   };
 
@@ -50,11 +50,11 @@ export default class AppClass extends React.Component {
       })
       .catch((err) => {
         console.log(err);
+        this.setState({ ...this.state, message: err.message });
       });
   };
 
   render() {
-    console.log(this.state);
     const { className } = this.props;
     return (
       <div id="wrapper" className={className}>
