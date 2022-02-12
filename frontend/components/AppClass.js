@@ -46,6 +46,7 @@ export default class AppClass extends React.Component {
       matrix: resetState.matrix,
       x: 2,
       y: 2,
+      steps: 0,
     });
   };
 
@@ -67,8 +68,7 @@ export default class AppClass extends React.Component {
 
       case "up":
         oldY = oldY - 1;
-
-        break;
+        steps: break;
 
       case "down":
         oldY = oldY + 1;
@@ -92,6 +92,7 @@ export default class AppClass extends React.Component {
       matrix: newMatrix,
       x: oldX,
       y: oldY,
+      steps: this.state.steps + 1,
     });
   };
 
