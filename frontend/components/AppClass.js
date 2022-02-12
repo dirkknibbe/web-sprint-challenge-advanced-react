@@ -1,6 +1,10 @@
 import React from "react";
 import axios from "axios";
 
+// (1, 1) (2, 1) (3, 1)
+// (1, 2) (2, 2) (3, 2)
+// (1, 3) (2, 3) (3, 3)
+
 export default class AppClass extends React.Component {
   state = {
     matrix: [
@@ -8,9 +12,10 @@ export default class AppClass extends React.Component {
       [false, true, false],
       [false, false, false],
     ],
+
     steps: 0,
-    x: 2,
-    y: 2,
+    x: 3,
+    y: 1,
     email: "",
     message: "",
   };
@@ -26,13 +31,54 @@ export default class AppClass extends React.Component {
   //       console.log(err);
   //     });
 
-  // handleLeftClick = (e) => {
-  //   e.preventDefault();
-  //   this.setState({
-  //     ...this.state,
-  //   });
-  // };
-  // }
+  handleClick = (e) => {
+    const direction = e.target.id;
+    // let x = this.state.x;
+    let oldX = this.state.x;
+    let oldY = this.state.y;
+    switch (direction) {
+      case "left":
+        oldX = oldX - 1;
+
+        break;
+
+      case "right":
+        oldX = oldX + 1;
+
+        break;
+
+      case "up":
+        oldY = oldY - 1;
+
+        break;
+
+      case "down":
+        oldY = oldY + 1;
+
+        break;
+
+      default:
+        break;
+    }
+
+    let newMatrix = [
+      [false, false, false],
+      [false, false, false],
+      [false, false, false],
+    ];
+
+    newMatrix[oldY - 1][oldX - 1] = true;
+    console.log("newMatrix: ", newMatrix);
+    console.log("oldX: ", oldX);
+    console.log("oldY: ", oldY);
+
+    this.setState({
+      ...this.state,
+      matrix: newMatrix,
+      x: oldX,
+      y: oldY,
+    });
+  };
 
   onChange = (event) => {
     const { value, id } = event.target;
@@ -45,7 +91,7 @@ export default class AppClass extends React.Component {
     axios
       .post(`http://localhost:9000/api/result`, this.state)
       .then((res) => {
-        console.log("here: ", res);
+        console.log("axios post: ", res);
         this.setState({ ...this.state, message: res.data.message });
       })
       .catch((err) => {
@@ -59,17 +105,19 @@ export default class AppClass extends React.Component {
     return (
       <div id="wrapper" className={className}>
         <div className="info">
-          <h3 id="coordinates">Coordinates ({this.state.coordinates})</h3>
+          <h3 id="coordinates">
+            Coordinates ({this.state.x}, {this.state.y})
+          </h3>
           <h3 id="steps">You moved {this.state.steps} times</h3>
         </div>
         <div id="grid">
           {this.state.matrix.map((row) => {
             return (
               <>
-                {row.map((item) => {
+                {row.map((block) => {
                   return (
                     <>
-                      {item ? (
+                      {block ? (
                         <div className="square active">B</div>
                       ) : (
                         <div className="square"></div>
@@ -86,13 +134,21 @@ export default class AppClass extends React.Component {
           <h3 id="message">{this.state.message}</h3>
         </div>
         <div id="keypad">
-          <button onClick={this.handleLeftClick} id="left">
+          <button onClick={this.handleClick} id="left">
             LEFT
           </button>
-          <button id="up">UP</button>
-          <button id="right">RIGHT</button>
-          <button id="down">DOWN</button>
-          <button id="reset">reset</button>
+          <button onClick={this.handleClick} id="up">
+            UP
+          </button>
+          <button onClick={this.handleClick} id="right">
+            RIGHT
+          </button>
+          <button onClick={this.handleClick} id="down">
+            DOWN
+          </button>
+          <button onClick={this.handleClick} id="reset">
+            reset
+          </button>
         </div>
         <form onSubmit={this.onSubmit}>
           <input
