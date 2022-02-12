@@ -18,6 +18,7 @@ export default class AppClass extends React.Component {
     y: 2,
     email: "",
     message: "",
+    warning: "",
   };
 
   // componentDidMount() {
@@ -58,6 +59,11 @@ export default class AppClass extends React.Component {
     switch (direction) {
       case "left":
         oldX = oldX - 1;
+        if (oldX < 1) {
+          this.setState({
+            warning: `You can't go left`,
+          });
+        }
 
         break;
 
@@ -68,7 +74,7 @@ export default class AppClass extends React.Component {
 
       case "up":
         oldY = oldY - 1;
-        steps: break;
+        break;
 
       case "down":
         oldY = oldY + 1;
@@ -147,7 +153,10 @@ export default class AppClass extends React.Component {
         </div>
 
         <div className="info">
-          <h3 id="message">{this.state.message}</h3>
+          <h3 id="message">
+            {this.state.message}
+            {this.state.warning}
+          </h3>
         </div>
         <div id="keypad">
           <button onClick={this.handleKeypad} id="left">
