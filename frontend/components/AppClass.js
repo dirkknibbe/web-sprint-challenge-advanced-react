@@ -14,8 +14,8 @@ export default class AppClass extends React.Component {
     ],
 
     steps: 0,
-    x: 3,
-    y: 1,
+    x: 2,
+    y: 2,
     email: "",
     message: "",
   };
@@ -31,9 +31,27 @@ export default class AppClass extends React.Component {
   //       console.log(err);
   //     });
 
-  handleClick = (e) => {
+  handleReset = () => {
+    let resetState = {
+      matrix: [
+        [false, false, false],
+        [false, true, false],
+        [false, false, false],
+      ],
+      x: 2,
+      y: 2,
+    };
+    this.setState({
+      ...this.state,
+      matrix: resetState.matrix,
+      x: 2,
+      y: 2,
+    });
+  };
+
+  handleKeypad = (e) => {
     const direction = e.target.id;
-    // let x = this.state.x;
+
     let oldX = this.state.x;
     let oldY = this.state.y;
     switch (direction) {
@@ -68,9 +86,6 @@ export default class AppClass extends React.Component {
     ];
 
     newMatrix[oldY - 1][oldX - 1] = true;
-    console.log("newMatrix: ", newMatrix);
-    console.log("oldX: ", oldX);
-    console.log("oldY: ", oldY);
 
     this.setState({
       ...this.state,
@@ -134,19 +149,19 @@ export default class AppClass extends React.Component {
           <h3 id="message">{this.state.message}</h3>
         </div>
         <div id="keypad">
-          <button onClick={this.handleClick} id="left">
+          <button onClick={this.handleKeypad} id="left">
             LEFT
           </button>
-          <button onClick={this.handleClick} id="up">
+          <button onClick={this.handleKeypad} id="up">
             UP
           </button>
-          <button onClick={this.handleClick} id="right">
+          <button onClick={this.handleKeypad} id="right">
             RIGHT
           </button>
-          <button onClick={this.handleClick} id="down">
+          <button onClick={this.handleKeypad} id="down">
             DOWN
           </button>
-          <button onClick={this.handleClick} id="reset">
+          <button onClick={this.handleReset} id="reset">
             reset
           </button>
         </div>
