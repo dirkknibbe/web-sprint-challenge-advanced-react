@@ -1,11 +1,51 @@
 import React, { useState } from "react";
 
 export default function AppFunctional(props) {
+  // state = {
+  //     matrix: [
+  //       [false, false, false],
+  //       [false, true, false],
+  //       [false, false, false],
+  //     ],
+
+  //     steps: 0,
+  //     x: 2,
+  //     y: 2,
+  //     email: "",
+  //     message: "",
+  //     warning: "",
+  //   };
+
+  const [matrix, setMatrix] = useState([
+    false,
+    false,
+    false,
+    false,
+    true,
+    false,
+    false,
+    false,
+    false,
+  ]);
+  const [steps, setSteps] = useState(0);
+  const [x, setX] = useState(2);
+  const [y, setY] = useState(2);
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
+  const [warning, setWarning] = useState("");
+
+  const handleClick = () => {
+    setMatrix(matrix[4] === false);
+  };
+  console.log(matrix[4]);
+
   return (
     <div id="wrapper" className={props.className}>
       <div className="info">
-        <h3 id="coordinates">Coordinates (2, 2)</h3>
-        <h3 id="steps">You moved 0 times</h3>
+        <h3 id="coordinates">
+          Coordinates ({x}, {y})
+        </h3>
+        <h3 id="steps">You moved {steps} times</h3>
       </div>
       <div id="grid">
         <div className="square"></div>
@@ -22,7 +62,9 @@ export default function AppFunctional(props) {
         <h3 id="message"></h3>
       </div>
       <div id="keypad">
-        <button id="left">LEFT</button>
+        <button onClick={handleClick} id="left">
+          LEFT
+        </button>
         <button id="up">UP</button>
         <button id="right">RIGHT</button>
         <button id="down">DOWN</button>
