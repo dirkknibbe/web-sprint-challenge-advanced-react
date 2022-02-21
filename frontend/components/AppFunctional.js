@@ -35,9 +35,15 @@ export default function AppFunctional(props) {
   const [warning, setWarning] = useState("");
 
   const handleClick = () => {
-    setMatrix(matrix[4] === false);
+    matrix.map((box) => {
+      if (box.value === true) {
+        return !box.value;
+      } else {
+        setMatrix([...matrix]);
+      }
+    });
   };
-  console.log(matrix[4]);
+  console.log(matrix);
 
   return (
     <div id="wrapper" className={props.className}>
