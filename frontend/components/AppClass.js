@@ -125,11 +125,9 @@ export default class AppClass extends React.Component {
 
   onSubmit = (event) => {
     event.preventDefault();
-
     axios
       .post(`http://localhost:9000/api/result`, this.state)
       .then((res) => {
-        console.log("axios post: ", res);
         this.setState({ ...this.state, message: res.data.message });
       })
       .catch((err) => {
