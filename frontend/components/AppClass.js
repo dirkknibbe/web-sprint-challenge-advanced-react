@@ -21,17 +21,6 @@ export default class AppClass extends React.Component {
     warning: "",
   };
 
-  // componentDidMount() {
-  //   axios
-  //     .post(`http://localhost:9000/api/result`, this.state)
-  //     .then((resp) => {
-  //       console.log(resp);
-  //       this.setState({ ...this.state, message: resp.data.message });
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-
   handleReset = () => {
     let resetState = {
       matrix: [
@@ -49,6 +38,8 @@ export default class AppClass extends React.Component {
       y: 2,
       steps: 0,
       warning: "",
+      email: "",
+      message: "",
     });
   };
 
@@ -131,9 +122,9 @@ export default class AppClass extends React.Component {
         this.setState({ ...this.state, message: res.data.message });
       })
       .catch((err) => {
-        console.log(err);
-        this.setState({ ...this.state, message: err.message });
+        this.setState({ ...this.state, message: err.response.data.message });
       });
+    this.setState({ ...this.state, email: "" });
   };
 
   render() {
@@ -144,24 +135,27 @@ export default class AppClass extends React.Component {
           <h3 id="coordinates">
             Coordinates ({this.state.x}, {this.state.y})
           </h3>
-          <h3 id="steps">You moved {this.state.steps} times</h3>
+          <h3 id="steps">
+            You moved{" "}
+            {`${this.state.steps} time${this.state.steps === 1 ? "" : "s"}`}
+          </h3>
         </div>
         <div id="grid">
-          {this.state.matrix.map((row) => {
+          {this.state.matrix.map((row, idx) => {
             return (
-              <>
-                {row.map((block) => {
+              <React.Fragment key={idx}>
+                {row.map((block, idx) => {
                   return (
-                    <>
+                    <React.Fragment key={idx}>
                       {block ? (
                         <div className="square active">B</div>
                       ) : (
                         <div className="square"></div>
                       )}
-                    </>
+                    </React.Fragment>
                   );
                 })}
-              </>
+              </React.Fragment>
             );
           })}
         </div>
@@ -194,7 +188,7 @@ export default class AppClass extends React.Component {
             onChange={this.onChange}
             id="email"
             type="email"
-            value={this.state.value}
+            value={this.state.email}
             placeholder="type email"
           ></input>
           <input id="submit" type="submit"></input>
