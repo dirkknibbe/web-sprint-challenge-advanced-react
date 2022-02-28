@@ -17,15 +17,15 @@ export default function AppFunctional(props) {
   //   };
 
   const [matrix, setMatrix] = useState([
-    false,
-    false,
-    false,
-    false,
-    true,
-    false,
-    false,
-    false,
-    false,
+    null,
+    null,
+    null,
+    null,
+    "B",
+    null,
+    null,
+    null,
+    null,
   ]);
   const [steps, setSteps] = useState(0);
   const [x, setX] = useState(2);
@@ -35,13 +35,7 @@ export default function AppFunctional(props) {
   const [warning, setWarning] = useState("");
 
   const handleClick = () => {
-    matrix.map((box) => {
-      if (box.value === true) {
-        return !box.value;
-      } else {
-        setMatrix([...matrix]);
-      }
-    });
+    matrix.map((block) => {});
   };
   console.log(matrix);
 

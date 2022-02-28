@@ -48,6 +48,7 @@ export default class AppClass extends React.Component {
       x: 2,
       y: 2,
       steps: 0,
+      warning: "",
     });
   };
 
@@ -56,29 +57,38 @@ export default class AppClass extends React.Component {
 
     let oldX = this.state.x;
     let oldY = this.state.y;
+    let warningMessage = "";
     switch (direction) {
       case "left":
-        oldX = oldX - 1;
-        if (oldX < 1) {
-          this.setState({
-            warning: `You can't go left`,
-          });
+        if (oldX <= 1) {
+          warningMessage = `You can't go left`;
+        } else {
+          oldX = oldX - 1;
         }
-
         break;
 
       case "right":
-        oldX = oldX + 1;
-
+        if (oldX >= 3) {
+          warningMessage = `You can't go right`;
+        } else {
+          oldX = oldX + 1;
+        }
         break;
 
       case "up":
-        oldY = oldY - 1;
+        if (oldY <= 1) {
+          warningMessage = `You can't go up`;
+        } else {
+          oldY = oldY - 1;
+        }
         break;
 
       case "down":
-        oldY = oldY + 1;
-
+        if (oldY >= 3) {
+          warningMessage = `You can't go down`;
+        } else {
+          oldY = oldY + 1;
+        }
         break;
 
       default:
@@ -99,6 +109,7 @@ export default class AppClass extends React.Component {
       x: oldX,
       y: oldY,
       steps: this.state.steps + 1,
+      warning: warningMessage,
     });
   };
 
@@ -123,6 +134,7 @@ export default class AppClass extends React.Component {
   };
 
   render() {
+    console.log(this.state);
     const { className } = this.props;
     return (
       <div id="wrapper" className={className}>
